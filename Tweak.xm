@@ -11,7 +11,11 @@ UIView *dockView;
 
 %hook SBDockView
 
--(id)initWithDockListView:(id)arg1 forSnapshot:(BOOL)arg2 {
+-(instancetype)initWithDockListView:(id)arg1 forSnapshot:(BOOL)arg2 {
+  UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureFired)];
+  tapGesture.numberOfTapsRequired = 2;
+  [self addGestureRecognizer:tapGesture];
+
   return stockDockView = %orig;
 }
 
@@ -51,11 +55,6 @@ UIView *dockView;
   }
 
   dockView.frame = backgroundView.bounds;
-
-  UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureFired)];
-  tapGesture.numberOfTapsRequired = 2;
-  [self addGestureRecognizer:tapGesture];
-
 }
 
 
@@ -99,6 +98,10 @@ UIView *dockView;
 %hook SBFloatingDockPlatterView
 
 -(id)initWithFrame:(CGRect)arg1 {
+  UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureFired)];
+  tapGesture.numberOfTapsRequired = 2;
+  [self addGestureRecognizer:tapGesture];
+  
   return floatingDockView = %orig;
 }
 
@@ -127,10 +130,6 @@ UIView *dockView;
   }
 
   dockView.frame = backgroundView.bounds;
-
-  UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureFired)];
-  tapGesture.numberOfTapsRequired = 2;
-  [self addGestureRecognizer:tapGesture];
 }
 
 
