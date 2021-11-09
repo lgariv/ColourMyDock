@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 #import "Headers.h"
-
+#import "colorpicker.h"
 
 SBFloatingDockPlatterView *floatingDockView;
 SBDockView *stockDockView;
@@ -66,6 +66,15 @@ UIView *dockView;
     colourPickerVC.delegate = self;
     colourPickerVC.selectedColor = dockView.backgroundColor;
     [[%c(SBIconController) sharedInstance] presentViewController:colourPickerVC animated:YES completion:nil];
+  } else {
+    UIViewController *vc = [[UIViewController alloc] init];
+    vc.view = [[SparkColourPickerView alloc] initWithFrame:vc.view.bounds];
+    vc.view.backgroundColor = [UIColor systemBackgroundColor];
+    [(SparkColourPickerView*)vc.view setDelegate:self];
+    NSData *decodedData = [[NSUserDefaults standardUserDefaults] objectForKey:@"dockColour"];
+    UIColor *dockBGColour = [NSKeyedUnarchiver unarchiveObjectWithData:decodedData];
+    [(SparkColourPickerView*)vc.view setCurrentColour:dockBGColour];
+    [[%c(SBIconController) sharedInstance] presentViewController:vc animated:YES completion:nil];
   }
 }
 
@@ -74,6 +83,17 @@ UIView *dockView;
 - (void)colorPickerViewControllerDidSelectColor:(UIColorPickerViewController *)viewController{
 
   UIColor *dockBGColour = viewController.selectedColor;
+
+  NSData *encodedData =[NSKeyedArchiver archivedDataWithRootObject:dockBGColour];
+  [[NSUserDefaults standardUserDefaults] setObject:encodedData forKey:@"dockColour"];
+
+  dockView.backgroundColor = dockBGColour;
+}
+
+%new
+-(void) colourPicker:(id)viewController didUpdateColour:(UIColor*) colour{
+
+  UIColor *dockBGColour = colour;
 
   NSData *encodedData =[NSKeyedArchiver archivedDataWithRootObject:dockBGColour];
   [[NSUserDefaults standardUserDefaults] setObject:encodedData forKey:@"dockColour"];

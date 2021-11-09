@@ -1,9 +1,9 @@
-Package: com.TitanD3v.colourmydock
-Name: ColourMyDock
-Depends: mobilesubstrate
+Package: com.titand3v.colourmydock13
+Name: ColourMyDock13
+Depends: mobilesubstrate, com.spark.libsparkcolourpicker
 Version: 1.0
 Architecture: iphoneos-arm
-Description: Colour your dock with iOS 14 colour picker
-Maintainer: TitanD3v
+Description: Colour your dock with spark colour picker
+Maintainer: LGarivDev
 Author: TitanD3v
 Section: Tweaks

@@ -1,4 +1,6 @@
-@interface SBDockView : UIView <UIColorPickerViewControllerDelegate>
+#import "colorpicker.h"
+
+@interface SBDockView : UIView <UIColorPickerViewControllerDelegate,SparkColourPickerViewDelegate>
 @end
 
 @interface SBFloatingDockPlatterView : UIView <UIColorPickerViewControllerDelegate>
